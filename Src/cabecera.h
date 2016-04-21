@@ -12,4 +12,4 @@
 #include "json.hpp"
 using namespace std;
 
-manageArguments(int argc, char *argv[]);
+int manageArguments(int argc, char *argv[]);

@@ -9,20 +9,28 @@ int main (int argc, char *argv[]) {
 	int s;
 	int n, enviados, recibidos;
 
-	// Comprobar los argumentos
-	int opcion = manageArguments(argc, *argv[]);
-	/*if (argc !=  4)
-	{
+	// Comprobar los argumentos y tomarlos
+	int opcion = manageArguments(argc, argv);
+	switch(opcion){
+		case (1):{ break; }
+		case (2):{ break; }
+		case (3):{ break; }
+		case (4):{ break; }
+		case (5):{ break; }
+		default: { break; }
+	}
+
+	//######################################## CODIGO A ELIMINAR
+	if (argc !=  4){
 		fprintf(stderr, "Error. Debe indicar la direccion del servidor (IP y Puerto) y el mensaje a enviar\r\n");
 		fprintf(stderr, "Sintaxis: %s <ip> <puerto> <mensaje>\n\r", argv[0]);
 		fprintf(stderr, "Ejemplo : %s 192.168.6.7 8574 \"Esto es un mensaje\"\n\r", argv[0]);
 		return 1;
-	}*/
-
-	// Tomar los argumentos		
+	}	
 	servidor_ip = argv[1];
 	servidor_puerto = argv[2];
 	mensaje = argv[3];
+	//###########################################################
 
 	printf("\n\rEnviar mensaje \"%s\" a %s:%s...\n\r\n\r", mensaje, servidor_ip, servidor_puerto);
 
