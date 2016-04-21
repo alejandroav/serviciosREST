@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include "cabecera.h"
 
 int
 main (int argc, char *argv[])
