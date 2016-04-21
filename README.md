@@ -27,7 +27,7 @@ Cliente de servicios Rest que proporciona información sobre los edificios de la
 
 3.- Navegar a la carpeta y clonar nuestro repositorio:
 
-  - ```git clone https://github.com/DanielFinestrat/MiniServidorHTTP```
+  - ```git clone https://github.com/alejandroav/serviciosREST```
 
 4.- Editar, y al terminar usar:
 
