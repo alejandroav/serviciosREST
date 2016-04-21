@@ -1,19 +1,23 @@
 all: clienteREST clean
 
-http_server: clienteREST.o funcionesDaniel.o funcionesAlejandro.o funcionesAngel.o
-	g++ -lstdc++ -g -std=c++11 -Wall -pedantic -o http_server clienteREST.o funcionesDaniel.o funcionesAlejandro.o funcionesAngel.o
+OPTS=-Wall -g -std=c++11 -"I."
+OBJS=funcionesDaniel.o funcionesAlejandro.o funcionesAngel.o
+CC=g++
+
+clienteREST: $(OBJS) clienteREST.o
+	$(CC) $(OPTS) $(OBJS) clienteREST.o -o clienteREST
 
 clienteREST.o: clienteREST.cc cabecera.h
-	g++ -lstdc++ -g -std=c++11 -Wall -pedantic -c clienteREST.cc
+	$(CC) $(OPTS) -c clienteREST.cc
 
 funcionesDaniel.o: funcionesDaniel.cc cabecera.h
-	g++ -lstdc++ -g -std=c++11 -Wall -pedantic -c funcionesDaniel.cc
-
-funcionesAlejandro.o: funcionesAlejandro.cc cabecera.h
-	g++ -lstdc++ -g -std=c++11 -Wall -pedantic -c funcionesAlejandro.cc
+	$(CC) $(OPTS) -c funcionesDaniel.cc
 
 funcionesAngel.o: funcionesAngel.cc cabecera.h
-	g++ -lstdc++ -g -std=c++11 -Wall -pedantic -c funcionesAngel.cc
+	$(CC) $(OPTS) -c funcionesAngel.cc
+
+funcionesAlejandro.o: funcionesAlejandro.cc cabecera.h
+	$(CC) $(OPTS) -c funcionesAlejandro.cc
 
 clean:
 	rm -rf *.o

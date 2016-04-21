@@ -1,8 +1,6 @@
 #include "cabecera.h"
 
-int
-main (int argc, char *argv[])
-{
+int main (int argc, char *argv[]) {
 	char *servidor_ip;
 	char *servidor_puerto;
 	char *mensaje, respuesta[1024];
