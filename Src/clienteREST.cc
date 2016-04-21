@@ -10,13 +10,14 @@ int main (int argc, char *argv[]) {
 	int n, enviados, recibidos;
 
 	// Comprobar los argumentos
-	if (argc !=  4)
+	int opcion = manageArguments(argc, *argv[]);
+	/*if (argc !=  4)
 	{
 		fprintf(stderr, "Error. Debe indicar la direccion del servidor (IP y Puerto) y el mensaje a enviar\r\n");
 		fprintf(stderr, "Sintaxis: %s <ip> <puerto> <mensaje>\n\r", argv[0]);
 		fprintf(stderr, "Ejemplo : %s 192.168.6.7 8574 \"Esto es un mensaje\"\n\r", argv[0]);
 		return 1;
-	}
+	}*/
 
 	// Tomar los argumentos		
 	servidor_ip = argv[1];

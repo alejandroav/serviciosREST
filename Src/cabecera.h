@@ -11,3 +11,5 @@
 #include <arpa/inet.h>
 #include "json.hpp"
 using namespace std;
+
+manageArguments(int argc, char *argv[]);
