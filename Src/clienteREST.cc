@@ -32,6 +32,7 @@ int main (int argc, char *argv[]) {
 	mensaje = argv[3];
 	//###########################################################
 
+    
 	printf("\n\rEnviar mensaje \"%s\" a %s:%s...\n\r\n\r", mensaje, servidor_ip, servidor_puerto);
 
 	// Paso 1: Abrir el socket
@@ -46,7 +47,7 @@ int main (int argc, char *argv[]) {
 
 	// Paso 2: Conectar al servidor		
 
-	// Cargar la dirección
+	// Cargar la direccion
 	direccion.sin_family = AF_INET; // socket familia INET
 	direccion.sin_addr.s_addr = inet_addr(servidor_ip);
 	direccion.sin_port = htons(atoi(servidor_puerto));
@@ -57,7 +58,7 @@ int main (int argc, char *argv[]) {
 		close(s);
 		return 1;
 	}
-	printf("Conexión establecida\n\r");
+	printf("Conexion establecida\n\r");
 
 	// Paso 3: Enviar mensaje
 
@@ -85,10 +86,13 @@ int main (int argc, char *argv[]) {
 	respuesta[recibidos] = '\0';
 	printf("Respuesta [%d bytes]: %s\n\r", recibidos, respuesta);
 
+    //Crear objeto json
+    //Guardar los valores en variables
+    //Crear tablas
+    
 	// Paso 5: Cerrar el socket
 	close(s);
-	printf("Socket cerrado. Comunicación finalizada\n\r");
+	printf("Socket cerrado. Comunicacion finalizada\n\r");
 
 	return 0;
 }
-
