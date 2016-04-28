@@ -18,3 +18,4 @@ string pedirEdificioEspecifico(string edificio);
 string pedirEstanciasEdificio(string edificio);
 string pedirEdificiosSinOcupantes();
 string pedirEstanciasOcupantesEdificio();
+string peticion();
