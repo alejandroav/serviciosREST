@@ -13,3 +13,8 @@
 using namespace std;
 
 int manageArguments(int argc, char *argv[]);
+string pedirEdificios();
+string pedirEdificioEspecifico(string edificio);
+string pedirEstanciasEdificio(string edificio);
+string pedirEdificiosSinOcupantes();
+string pedirEstanciasOcupantesEdificio();
