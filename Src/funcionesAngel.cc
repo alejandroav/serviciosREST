@@ -46,7 +46,7 @@ void SepararJSON(string frase){
         //No leemos los corchetes del principio y el final
         if(temp[i]=='[' || temp[i]==']'){}
         //En el caso de final del objeto pasamos el json al método y lo reseteamos para la lectura del siguiente
-        else if(temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{'){
+        else if((temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{') || (temp[i]=='}' && temp[i+1]==']')){
             json += temp[i];
             //LLAMAR AL METODO QUE TRATA LOS JSON
             json = "";
