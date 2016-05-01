@@ -33,7 +33,22 @@ string CorregirJSON(string frase){
     return correcion;
 }
 
-void SepararJSON(string frase){
+void SeleccionMetodo(string frase, int num, bool final){  
+	switch(num){
+		case 1: //Tratar primer json
+			break;
+		case 2: //Tratar segundo json
+			break;
+		case 3:	//Tratar tercer json
+			break;
+		case 4:	//Tratar cuarto json
+			break;
+		case 5: //Tratar quinto json
+			break;
+	}
+}
+
+void SepararJSON(string frase, int num){
     //Creamos una variable donde guardaremos cada JSON por separado
     string json = "";
     
@@ -46,12 +61,16 @@ void SepararJSON(string frase){
         //No leemos los corchetes del principio y el final
         if(temp[i]=='[' || temp[i]==']'){}
         //En el caso de final del objeto pasamos el json al método y lo reseteamos para la lectura del siguiente
-        else if((temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{') || (temp[i]=='}' && temp[i+1]==']')){
+        else if(temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{'){
             json += temp[i];
-            //LLAMAR AL METODO QUE TRATA LOS JSON
+            SeleccionMetodo(json, num, false);
             json = "";
             i++;
         }
+	else if(temp[i]=='}' && temp[i+1]==']'){ 
+		json += temp[i];
+		SeleccionMetodo(json, num, true);	
+	}
         //Guardamos el caracter en el json
         else{
             json += temp[i];
