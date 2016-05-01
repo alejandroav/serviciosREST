@@ -20,4 +20,5 @@ string pedirEdificiosSinOcupantes();
 string pedirEstanciasOcupantesEdificio();
 string peticion();
 string CorregirJSON(string frase);
-void SepararJSON(string frase);
+void SepararJSON(string frase, int num);
+void SeleccionMetodo(string frase, int num, bool final);
