@@ -1,4 +1,5 @@
 #include <cstring>
+#include <string.h>
 #include <fstream>
 #include <sstream>
 #include <sys/types.h>
@@ -22,3 +23,6 @@ string peticion();
 string CorregirJSON(string frase);
 void SepararJSON(string frase, int num);
 void SeleccionMetodo(string frase, int num, bool final);
+void angel();
+void ListaEdificios(string frase, bool final);
+void ListaEdificiosVacios(string frase, bool final);
