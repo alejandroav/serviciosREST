@@ -1,18 +1,19 @@
 #include "cabecera.h"
+#include <string.h>
 using namespace nlohmann;
 
 void angel(){
 
-    auto j = json::parse("{\"id\":\"00\",\"nombre\":\"CAMPUS DE SAN VICENTE DEL RASPEIG\",\"count_edificios\":47,\"bbox\":\"-0.520911377238477,38.3796107687567,-0.505397344484967,38.3899821866561\"}");
+    auto j = json::parse("{\"id\":\"{0000,CAMPUS (ZONAS COMUNES)}\",\"superficie\":\"647577.39067068\",\"estancias\":372,\"ocupantes\":0}");
     
     cout<<"hola"<<endl;
+	cout<<j.size()<<endl;
     
     for(json::iterator it = j.begin(); it != j.end(); ++it){
         cout << it.key() << " : " << it.value() << endl;
     }
 
 }
-
 
 string CorregirJSON(string frase){
     //Creamos la variable donde guardaremos el json corregido
@@ -21,7 +22,7 @@ string CorregirJSON(string frase){
     char temp[frase.size()+1];
     strcpy(temp, frase.c_str());
     //Transformamos todas las comillas dobles en \"
-    for(int i=0;i<strlen(temp);i++){
+    for(size_t i=0;i<strlen(temp);i++){
         //34 --> "
         if(temp[i]==34){
             correcion+="\"";
@@ -33,13 +34,83 @@ string CorregirJSON(string frase){
     return correcion;
 }
 
+void ListaEdificios(string frase, bool final){
+	
+	auto j = json::parse(frase);
+	string id = "";
+	string nombre = "";
+	//Guardo los valores en variables
+	for(json::iterator it = j.begin(); it != j.end(); ++it){
+		if(it.key().compare("id")==0){
+			id = it.value();
+		}
+		else if(it.key().compare("nombre")==0){
+			nombre = it.value();
+		}
+	}
+	//Linea de separacion 57=1+4+1+50+1
+	for(int i=0;i<57;i++){
+		cout<<"-";
+	}
+	cout<<endl;
+	//Linea de informacion
+	cout<<"| "<<id<<" | "<<nombre;
+	int espacios = 50 - 1 - nombre.size();
+	for(int j=0;j<espacios;j++){
+		cout<<" ";		
+	}
+	cout<<"|"<<endl;
+	//Linia final de tabla
+	if(final){
+		for(int i=0;i<57;i++){
+			cout<<"-";
+		}
+		cout<<endl;
+	}
+}
+
+void ListaEdificiosVacios(string frase, bool final){
+	
+	auto j = json::parse(frase);
+	string id = "";
+	string nombre = "";
+	//Guardo los valores en variables
+	for(json::iterator it = j.begin(); it != j.end(); ++it){
+		if(it.key().compare("id")==0){
+			id = it.value();
+		}
+		else if(it.key().compare("nombre")==0){
+			nombre = it.value();
+		}
+	}
+	//Linea de separacion 59=1+6+1+50+1
+	for(int i=0;i<59;i++){
+		cout<<"-";
+	}
+	cout<<endl;
+	//Linea de informacion
+	cout<<"| "<<id<<" | "<<nombre;
+	int espacios = 50 - 1 - nombre.size();
+	for(int j=0;j<espacios;j++){
+		cout<<" ";
+	}
+	cout<<"|"<<endl;
+	//Linia final de tabla
+	if(final){
+		for(int i=0;i<59;i++){
+			cout<<"-";
+		}
+		cout<<endl;
+	}
+}
+
 void SeleccionMetodo(string frase, int num, bool final){  
 	switch(num){
-		case 1: //Tratar primer json
+		case 1: ListaEdificios(frase, final);
 			break;
 		case 2: //Tratar segundo json
 			break;
-		case 3:	//Tratar tercer json
+		case 3:	ListaEdificiosVacios(frase, final);
 			break;
 		case 4:	//Tratar cuarto json
 			break;
@@ -57,7 +128,7 @@ void SepararJSON(string frase, int num){
     strcpy(temp, frase.c_str());
     
     //Recorremos el char
-    for(int i=0; i<strlen(temp);i++){
+    for(size_t i=0; i<strlen(temp);i++){
         //No leemos los corchetes del principio y el final
         if(temp[i]=='[' || temp[i]==']'){}
         //En el caso de final del objeto pasamos el json al método y lo reseteamos para la lectura del siguiente
