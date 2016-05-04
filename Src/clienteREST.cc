@@ -11,6 +11,7 @@ int main (int argc, char *argv[]) {
 
 	// Comprobar los argumentos y tomarlos
 	int opcion = manageArguments(argc, argv);
+
 	switch(opcion){
 		case (1):{ break; }
 		case (2):{ break; }
@@ -19,19 +20,15 @@ int main (int argc, char *argv[]) {
 		case (5):{ break; }
 		default: { break; }
 	}
+	
+	string ip = "193.145.231.149";
+	servidor_ip = const_cast<char*>(ip.c_str());
+	string puerto = "80";
+	servidor_puerto = const_cast<char*>(puerto.c_str());
 
-	//######################################## CODIGO A ELIMINAR
-	if (argc !=  4){
-		fprintf(stderr, "Error. Debe indicar la direccion del servidor (IP y Puerto) y el mensaje a enviar\r\n");
-		fprintf(stderr, "Sintaxis: %s <ip> <puerto> <mensaje>\n\r", argv[0]);
-		fprintf(stderr, "Ejemplo : %s 192.168.6.7 8574 \"Esto es un mensaje\"\n\r", argv[0]);
-		return 1;
-	}	
-	servidor_ip = argv[1];
-	servidor_puerto = argv[2];
-	mensaje = argv[3];
-	//###########################################################
-
+	string missatge = pedirEdificiosSinOcupantes();
+	mensaje = const_cast<char*>(missatge.c_str());
+	
     
 	printf("\n\rEnviar mensaje \"%s\" a %s:%s...\n\r\n\r", mensaje, servidor_ip, servidor_puerto);
 
@@ -51,7 +48,6 @@ int main (int argc, char *argv[]) {
 	direccion.sin_family = AF_INET; // socket familia INET
 	direccion.sin_addr.s_addr = inet_addr(servidor_ip);
 	direccion.sin_port = htons(atoi(servidor_puerto));
-	
 	if (connect(s, (struct sockaddr *)&direccion, 	sizeof (direccion)) == -1)
 	{
 		fprintf(stderr, "Error. No se puede conectar al servidor\n\r");
@@ -84,7 +80,11 @@ int main (int argc, char *argv[]) {
 		return 1;
 	}
 	respuesta[recibidos] = '\0';
-	printf("Respuesta [%d bytes]: %s\n\r", recibidos, respuesta);
+	string cuerpo = leerCuerpo(respuesta);
+	cout<<"Respuesta: "<<cuerpo<<endl;
+	cuerpo = CorregirJSON(cuerpo);
+	SepararJSON(cuerpo, 1);
+
 
     //Crear objeto json
     //Guardar los valores en variables
