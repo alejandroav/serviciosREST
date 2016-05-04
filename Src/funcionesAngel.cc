@@ -35,7 +35,6 @@ string CorregirJSON(string frase){
 }
 
 void ListaEdificios(string frase, bool final){
-	
 	auto j = json::parse(frase);
 	string id = "";
 	string nombre = "";
@@ -122,7 +121,7 @@ void SeleccionMetodo(string frase, int num, bool final){
 void SepararJSON(string frase, int num){
     //Creamos una variable donde guardaremos cada JSON por separado
     string json = "";
-    
+    bool leer = false;
     //Pasamos a char el string que recibimos por parametros
     char temp[frase.size()+1];
     strcpy(temp, frase.c_str());
@@ -130,21 +129,44 @@ void SepararJSON(string frase, int num){
     //Recorremos el char
     for(size_t i=0; i<strlen(temp);i++){
         //No leemos los corchetes del principio y el final
-        if(temp[i]=='[' || temp[i]==']'){}
+        if(temp[i]=='[' || temp[i]==']'){leer = true;}
         //En el caso de final del objeto pasamos el json al método y lo reseteamos para la lectura del siguiente
-        else if(temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{'){
+        else if(temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{' && leer){
             json += temp[i];
             SeleccionMetodo(json, num, false);
             json = "";
             i++;
         }
-	else if(temp[i]=='}' && temp[i+1]==']'){ 
+	else if(temp[i]=='}' && temp[i+1]==']' && leer){ 
 		json += temp[i];
 		SeleccionMetodo(json, num, true);	
 	}
         //Guardamos el caracter en el json
         else{
-            json += temp[i];
+		if(leer){
+            		json += temp[i];
+		}
         }
     }
+}
+
+string leerCuerpo(char mensaje[]){
+	string cuerpo = "";
+	bool fin = false;
+	for(size_t i=0; i<strlen(mensaje); i++){
+		//Lee el cuerpo
+		if(fin){
+			if(mensaje[i]!=13 && mensaje[i]!=10){
+				cuerpo+=mensaje[i];
+			}
+		}
+		//Le primera linea y cabeceras
+		else{
+			//Doble salto de linea, donde empieza el cuerpo
+			if((mensaje[i]==13 || mensaje[i]==10) && (mensaje[i+1]==13 || mensaje[i+1]==10) && ((mensaje[i+2]==13 || mensaje[i+2]==10))){
+				fin = true;
+			}
+		}	
+	}
+	return cuerpo;
 }
