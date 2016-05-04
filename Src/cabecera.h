@@ -26,3 +26,4 @@ void SeleccionMetodo(string frase, int num, bool final);
 void angel();
 void ListaEdificios(string frase, bool final);
 void ListaEdificiosVacios(string frase, bool final);
+string leerCuerpo(char mensaje[]);
