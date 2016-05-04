@@ -27,5 +27,5 @@ string pedirEstanciasOcupantesEdificio() {
 
 // devuelve los valores comunes a todas las peticiones
 string peticion() {
-    return " HTTP/1.1\r\nHost: 193.145.231.149:80\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nConnection: keep-alive";
+    return " HTTP/2.0\r\nHost: 193.145.231.149:80\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nConnection: keep-alive\n\n";
 }
