@@ -2,7 +2,7 @@
 
 int menu(){
 	int toRet = 0;
-	cout<<"Menu de peticiones:\n\r1.- Listado de edificios\n\r2.- Edificios con estancias sin ocupantes\n\r3.- Edificios + Estancias + Numero de Ocupantes\n\r";
+	cout<<"Menu de peticiones:\n\r1.- Listado de edificios\n\r2.- Numero de estancias y ocupantes por edificio\n\r3.- Edificios con estancias sin ocupantes\n\r";
 	cin>>toRet;
 	if (toRet <= 0 || toRet >= 4) toRet = menu();
 	return(toRet);
@@ -21,7 +21,7 @@ int manageArguments(int argc, char *argv[]){
 	else if(argc == 3) { 
 		if(strcmp(argv[1],"-e") == 0){
 			idEdificio = argv[2];
-			toRet = 2;
+			toRet = 4;
 		} else toRet = -1;
 	}
 
