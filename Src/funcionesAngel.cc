@@ -34,6 +34,43 @@ string CorregirJSON(string frase){
     return correcion;
 }
 
+void PintarCaja(int num){
+	switch(num){
+		case 1:{ 
+			//Linea de separacion 57=1+4+1+50+1
+			for(int i=0;i<59;i++){
+				cout<<"-";
+			}
+			cout<<endl;
+			cout<<"|  ID  | NOMBRE";
+			int espacios = 50 -1 -6;
+			for(int j=0;j<espacios;j++){
+				cout<<" ";		
+			}
+			cout<<"|"<<endl;
+			break;}
+		case 2:{
+			break;}
+		case 3:{
+			//Linea de separacion 57=1+4+1+50+1
+			for(int i=0;i<59;i++){
+				cout<<"-";
+			}
+			cout<<endl;
+			cout<<"|  ID  | NOMBRE";
+			int espacios = 50 -1 -6;
+			for(int j=0;j<espacios;j++){
+				cout<<" ";		
+			}
+			cout<<"|"<<endl;
+			break;}
+		case 4:{
+			break;}
+		case 5:{
+			break;}
+	}
+}
+
 void ListaEdificios(string frase, bool final){
 	auto j = json::parse(frase);
 	string id = "";
@@ -119,6 +156,7 @@ void SeleccionMetodo(string frase, int num, bool final){
 }
 
 void SepararJSON(string frase, int num){
+	PintarCaja(num);
     //Creamos una variable donde guardaremos cada JSON por separado
     string json = "";
     bool leer = false;
