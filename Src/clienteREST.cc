@@ -13,9 +13,15 @@ int main (int argc, char *argv[]) {
 	int opcion = manageArguments(argc, argv);
 
 	switch(opcion){
-		case (1):{ break; }
+		case (1):{ 
+			string missatge = pedirEdificios();
+			mensaje = const_cast<char*>(missatge.c_str());
+			break; }
 		case (2):{ break; }
-		case (3):{ break; }
+		case (3):{
+			string missatge = pedirEdificiosSinOcupantes();
+			mensaje = const_cast<char*>(missatge.c_str());
+			break; }
 		case (4):{ break; }
 		case (5):{ break; }
 		default: { break; }
@@ -26,8 +32,7 @@ int main (int argc, char *argv[]) {
 	string puerto = "80";
 	servidor_puerto = const_cast<char*>(puerto.c_str());
 
-	string missatge = pedirEdificiosSinOcupantes();
-	mensaje = const_cast<char*>(missatge.c_str());
+	
 	
     
 	printf("\n\rEnviar mensaje \"%s\" a %s:%s...\n\r\n\r", mensaje, servidor_ip, servidor_puerto);
@@ -83,7 +88,7 @@ int main (int argc, char *argv[]) {
 	string cuerpo = leerCuerpo(respuesta);
 	cout<<"Respuesta: "<<cuerpo<<endl;
 	cuerpo = CorregirJSON(cuerpo);
-	SepararJSON(cuerpo, 1);
+	SepararJSON(cuerpo, opcion);
 
 
     //Crear objeto json
