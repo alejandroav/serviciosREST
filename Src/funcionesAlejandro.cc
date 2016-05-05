@@ -7,7 +7,7 @@ string pedirEdificios() {
 
 // recupera un edificio especifico
 string pedirEdificioEspecifico(string edificio) {
-    return "GET /api/pub/estancia/edificio/"+edificio+"/items"peticion();
+    return "GET /api/pub/edificio/"+edificio+peticion();
 }
 
 // recupera las estancias de un edificio especifico
