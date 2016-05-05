@@ -17,7 +17,10 @@ int main (int argc, char *argv[]) {
 			string missatge = pedirEdificios();
 			mensaje = const_cast<char*>(missatge.c_str());
 			break; }
-		case (2):{ break; }
+		case (2):{ 
+			string missatge = pedirEstanciasOcupantesEdificio();
+			mensaje = const_cast<char*>(missatge.c_str());
+			break; }
 		case (3):{
 			string missatge = pedirEdificiosSinOcupantes();
 			mensaje = const_cast<char*>(missatge.c_str());
@@ -84,9 +87,21 @@ int main (int argc, char *argv[]) {
 		close(s);
 		return 1;
 	}
-	respuesta[recibidos] = '\0';
 	string cuerpo = leerCuerpo(respuesta);
-	cout<<"Respuesta: "<<cuerpo<<endl;
+	cout<<respuesta<<endl;
+	while(respuesta[recibidos-1]!='\n'){
+		n = sizeof(respuesta) - 1;
+		recibidos = read(s, respuesta, n);
+		if (recibidos == 1)
+		{
+			fprintf(stderr, "Error recibiendo respuesta\n\r");
+			close(s);
+			return 1;
+		}
+		respuesta[recibidos] = '\0';
+		cuerpo += respuesta;
+		cout<<respuesta<<endl;
+	}
 	cuerpo = CorregirJSON(cuerpo);
 	SepararJSON(cuerpo, opcion);
 
