@@ -4,14 +4,14 @@ int main (int argc, char *argv[]) {
 	
 	char *servidor_ip;
 	char *servidor_puerto;
-	char *mensaje, respuesta[1024];
+	char respuesta[1024];
+    const char* mensaje;
 	struct sockaddr_in direccion;
 	int s;
 	int n, enviados, recibidos;
-
+    string edificio = "";
 	// Comprobar los argumentos y tomarlos
-	int opcion = manageArguments(argc, argv);
-
+    int opcion = menu();
 	switch(opcion){
 		case (1):{ 
 			string missatge = pedirEdificios();
@@ -25,19 +25,28 @@ int main (int argc, char *argv[]) {
 			string missatge = pedirEdificiosSinOcupantes();
 			mensaje = const_cast<char*>(missatge.c_str());
 			break; }
-		case (4):{ break; }
-		case (5):{ break; }
-		default: { break; }
+		case (4):{
+            cin>>edificio;
+            string missatge = pedirEstanciasOcupantesEdificio();
+            mensaje = const_cast<char*>(missatge.c_str());
+            break; }
+		case (5):{
+            string missatge = "hola";
+            //mensaje = const_cast<char*>(missatge.c_str());
+            mensaje = &missatge[0];
+            break; }
+		default: {
+            string missatge = "hola";
+            mensaje = const_cast<char*>(missatge.c_str());
+            break; }
 	}
-	
-	string ip = "193.145.231.149";
+
+	string ip = "172.25.224.194";
 	servidor_ip = const_cast<char*>(ip.c_str());
 	string puerto = "80";
 	servidor_puerto = const_cast<char*>(puerto.c_str());
 
 	
-	
-    
 	printf("\n\rEnviar mensaje \"%s\" a %s:%s...\n\r\n\r", mensaje, servidor_ip, servidor_puerto);
 
 	// Paso 1: Abrir el socket
@@ -49,7 +58,7 @@ int main (int argc, char *argv[]) {
 		return 1;
 	}
 	printf("Socket abierto\n\r");
-
+    cout<<"Mensaje: "<<mensaje<<endl;
 	// Paso 2: Conectar al servidor		
 
 	// Cargar la direccion
@@ -102,8 +111,9 @@ int main (int argc, char *argv[]) {
 		cuerpo += respuesta;
 		cout<<respuesta<<endl;
 	}
+
 	cuerpo = CorregirJSON(cuerpo);
-	SepararJSON(cuerpo, opcion);
+	SepararJSON(cuerpo, opcion, edificio);
 
 
     //Crear objeto json
