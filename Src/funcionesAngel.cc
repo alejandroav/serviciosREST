@@ -50,6 +50,12 @@ void PintarCaja(int num){
 			cout<<"|"<<endl;
 			break;}
 		case 2:{
+			//Linea de separacion
+			for(int i=0;i<20;i++){
+				cout<<"-";
+			}
+			cout<<endl;
+			cout<<"|  ID  | EST | OCU |"<<endl;
 			break;}
 		case 3:{
 			//Linea de separacion 57=1+4+1+50+1
@@ -71,6 +77,35 @@ void PintarCaja(int num){
 	}
 }
 
+int ContadorCaracteres(string frase){
+	char temp[frase.size()+1];
+	strcpy(temp, frase.c_str());
+	int h=0;
+	for(size_t i=0;i<strlen(temp);i++){
+		if((temp[i]<32 || temp[i]>126)){
+		h++;}
+	}
+	return h/2;
+}
+
+string ArreglarId(string frase){
+	string id = "";
+	bool guardado = false;
+	char temp[frase.size()+1];
+	strcpy(temp, frase.c_str());
+	for(size_t i=0; i<strlen(temp) && !guardado;i++){
+		if(temp[i]>=48 && temp[i]<=57 && temp[i+1]>=48 && temp[i+1]<=57){
+			id+=temp[i];		
+		}
+		else if(temp[i]>=48 && temp[i]<=57 && !(temp[i+1]>=48 && temp[i+1]<=57)){
+			id += temp[i];
+			guardado = true;
+		}
+	}
+
+	return id;
+}
+
 void ListaEdificios(string frase, bool final){
 	auto j = json::parse(frase);
 	string id = "";
@@ -85,20 +120,20 @@ void ListaEdificios(string frase, bool final){
 		}
 	}
 	//Linea de separacion 57=1+4+1+50+1
-	for(int i=0;i<57;i++){
+	for(int i=0;i<58;i++){
 		cout<<"-";
 	}
 	cout<<endl;
 	//Linea de informacion
 	cout<<"| "<<id<<" | "<<nombre;
-	int espacios = 50 - 1 - nombre.size();
+	int espacios = 50 - 1 - nombre.size()+ContadorCaracteres(nombre);
 	for(int j=0;j<espacios;j++){
 		cout<<" ";		
 	}
 	cout<<"|"<<endl;
 	//Linia final de tabla
 	if(final){
-		for(int i=0;i<57;i++){
+		for(int i=0;i<59;i++){
 			cout<<"-";
 		}
 		cout<<endl;
@@ -120,13 +155,13 @@ void ListaEdificiosVacios(string frase, bool final){
 		}
 	}
 	//Linea de separacion 59=1+6+1+50+1
-	for(int i=0;i<59;i++){
+	for(int i=0;i<58;i++){
 		cout<<"-";
 	}
 	cout<<endl;
 	//Linea de informacion
 	cout<<"| "<<id<<" | "<<nombre;
-	int espacios = 50 - 1 - nombre.size();
+	int espacios = 50 - 1 - nombre.size() + ContadorCaracteres(nombre);
 	for(int j=0;j<espacios;j++){
 		cout<<" ";
 	}
@@ -140,11 +175,58 @@ void ListaEdificiosVacios(string frase, bool final){
 	}
 }
 
+string itoa(int num){
+	stringstream s;
+	s<<num;
+	return s.str();
+}
+
+void EstanciasOcupantesEdificio(string frase, bool final){
+	auto j = json::parse(frase);
+	string id = "";
+	string estancias = "";
+	string ocupantes = "";
+	for(json::iterator it = j.begin(); it != j.end(); ++it){
+		if(it.key().compare("id")==0){
+			id = it.value();
+		}
+		if(it.key().compare("ocupantes")==0){
+			ocupantes = itoa(it.value());
+		}
+		if(it.key().compare("estancias")==0){
+			estancias = itoa(it.value());
+		}
+	}
+	
+	//Arreglar id
+	id = ArreglarId(id);
+	//LInea de separacion 1 + 6 + 1 + 5 + 1 + 5 + 1 = 30
+	for(int i = 0;i<20;i++){
+		cout<<"-";
+	}
+	cout<<endl;
+	//Linea de informacion
+	cout<<"| "<<id<<" | "<<estancias;
+	if(estancias.size()==2){cout<<" ";}
+	else if(estancias.size()==1){cout<<"  ";}
+	cout<<" | "<<ocupantes;
+	if(ocupantes.size()==2){cout<<" ";}
+	else if(ocupantes.size()==1){cout<<"  ";}
+	cout<<" |"<<endl;
+	//Linea final
+	if(final){
+		for(int i=0;i<20;i++){
+			cout<<"-";
+		}
+		cout<<endl;
+	}
+}
+
 void SeleccionMetodo(string frase, int num, bool final){  
 	switch(num){
 		case 1: ListaEdificios(frase, final);
 			break;
-		case 2: //Tratar segundo json
+		case 2: EstanciasOcupantesEdificio(frase, final);
 			break;
 		case 3:	ListaEdificiosVacios(frase, final);
 			break;
