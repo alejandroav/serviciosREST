@@ -21,9 +21,11 @@ string pedirEdificiosSinOcupantes();
 string pedirEstanciasOcupantesEdificio();
 string peticion();
 string CorregirJSON(string frase);
-void SepararJSON(string frase, int num);
-void SeleccionMetodo(string frase, int num, bool final);
+void SepararJSON(string frase, int num, string edificio);
+void SeleccionMetodo(string frase, int num, bool final, string edificio);
 void angel();
+int menu();
 void ListaEdificios(string frase, bool final);
 void ListaEdificiosVacios(string frase, bool final);
 string leerCuerpo(char mensaje[]);
+
