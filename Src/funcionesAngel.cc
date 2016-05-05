@@ -222,7 +222,44 @@ void EstanciasOcupantesEdificio(string frase, bool final){
 	}
 }
 
-void SeleccionMetodo(string frase, int num, bool final){  
+void EstanciaPorEdificio(string frase, string edificio){
+    auto j = json::parse(frase);
+    string id = "";
+    string nombre = "";
+    string estancias = "";
+    for(json::iterator it = j.begin(); it != j.end(); ++it){
+        if(it.key().compare("id")==0){
+            id = it.value();
+        }
+        if(it.key().compare("nombre")==0){
+            nombre = itoa(it.value());
+        }
+        if(it.key().compare("estancias")==0){
+            estancias = itoa(it.value());
+        }
+    }
+    id = ArreglarId(id);
+    if(id.compare(edificio)==0){
+        //Linea Superior
+        for(int i=0;i<50;i++){
+            cout<<"-";
+        }
+        cout<<endl;
+        cout<<"| "<<id<<" | "<<nombre;
+        int espacios = 50 - 1 - nombre.size() + ContadorCaracteres(nombre);
+        for(int j=0;j<espacios;j++){
+            cout<<" ";
+        }
+        cout<<"| "<<estancias<<" |"<<endl;
+        //Linea Inferior
+        for(int i=0;i<50;i++){
+            cout<<"-";
+        }
+        cout<<endl;
+    }
+}
+
+void SeleccionMetodo(string frase, int num, bool final, string edificio){
 	switch(num){
 		case 1: ListaEdificios(frase, final);
 			break;
@@ -230,14 +267,14 @@ void SeleccionMetodo(string frase, int num, bool final){
 			break;
 		case 3:	ListaEdificiosVacios(frase, final);
 			break;
-		case 4:	//Tratar cuarto json
+        case 4:	EstanciaPorEdificio(frase, edificio);
 			break;
 		case 5: //Tratar quinto json
 			break;
 	}
 }
 
-void SepararJSON(string frase, int num){
+void SepararJSON(string frase, int num, string edificio){
 	PintarCaja(num);
     //Creamos una variable donde guardaremos cada JSON por separado
     string json = "";
@@ -253,13 +290,13 @@ void SepararJSON(string frase, int num){
         //En el caso de final del objeto pasamos el json al método y lo reseteamos para la lectura del siguiente
         else if(temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{' && leer){
             json += temp[i];
-            SeleccionMetodo(json, num, false);
+            SeleccionMetodo(json, num, false, edificio);
             json = "";
             i++;
         }
 	else if(temp[i]=='}' && temp[i+1]==']' && leer){ 
 		json += temp[i];
-		SeleccionMetodo(json, num, true);	
+		SeleccionMetodo(json, num, true, edificio);
 	}
         //Guardamos el caracter en el json
         else{
