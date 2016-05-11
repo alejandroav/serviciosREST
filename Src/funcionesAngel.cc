@@ -78,6 +78,9 @@ void tratarMetodo5(string frase, string idActividad){
 		}
 		cout<<endl;
 	}
+	else{
+		cout<<"SYSMSG --> Actividad no encontrada, por favor asegurese de que la actividad es correcta."<<endl;
+	}
 }
 
 
