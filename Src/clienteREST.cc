@@ -106,7 +106,12 @@ int main (int argc, char *argv[]) {
 //cout<<respuesta<<endl;
 	}
 //cout<<cuerpo<<endl;
-	SepararJSON(cuerpo, opcion, idEdificio);
+	if(opcion<=4){
+		SepararJSON(cuerpo, opcion, idEdificio);
+	}
+	else{
+		tratarMetodo5(cuerpo, idActividad);
+	}
 
 
 	//Crear objeto json
