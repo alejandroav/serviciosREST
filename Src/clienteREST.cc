@@ -47,8 +47,8 @@ int main (int argc, char *argv[]) {
 
 	// Paso 1: Abrir el socket
 	s = socket(AF_INET, SOCK_STREAM, 0); // Creo el socket
-	if (s == -1){ fprintf(stderr, "\n\rSYSMSG --> Error. No se puede abrir el socket\n\r"); return 1; }
-	printf("\n\rSYSMSG --> Socket abierto\n\r");
+	if (s == -1){ fprintf(stderr, "SYSMSG --> Error. No se puede abrir el socket\n\r"); return 1; }
+	printf("SYSMSG --> Socket abierto\n\r");
 	
 	// Paso 2: Conectar al servidor		
 	// Cargar la direccion
@@ -68,27 +68,27 @@ int main (int argc, char *argv[]) {
 	string puerto = "80";
 	direccion.sin_port = htons(atoi(const_cast<char*>(puerto.c_str())));
 
-	cout<<"\n\rSYSMSG --> Escribiendo a " << chr << ":" << puerto <<endl;
+	cout<<"SYSMSG --> Escribiendo a " << chr << ":" << puerto <<endl;
 	if (connect(s, (struct sockaddr *)&direccion, sizeof (direccion)) == -1){
-		fprintf(stderr, "\n\rSYSMSG --> Error. No se puede conectar al servidor\n\r");
+		fprintf(stderr, "SYSMSG --> Error. No se puede conectar al servidor\n\r");
 		close(s); return 1;
 	}
-	printf("\n\rSYSMSG --> Conexion establecida\n\r");
+	printf("SYSMSG --> Conexion establecida\n\r");
 
 	// Paso 3: Enviar mensaje
 	n = strlen(mensaje);
 	enviados = write(s, mensaje, n);
 	if (enviados == -1 || enviados < n){
-		fprintf(stderr, "\n\rSYSMSG --> Error enviando el mensaje\n\r");
+		fprintf(stderr, "SYSMSG --> Error enviando el mensaje\n\r");
 		close(s); return 1;
 	}
-	printf("\n\rSYSMSG --> Mensaje enviado\n\r");
+	printf("SYSMSG --> Mensaje enviado\n\r\n\r");
 
 	// Paso 4: Recibir respuesta
 	n = sizeof(respuesta) - 1;
 	recibidos = read(s, respuesta, n);
 	if (recibidos == 1){
-		fprintf(stderr, "\n\rSYSMSG --> Error recibiendo respuesta\n\r");
+		fprintf(stderr, "SYSMSG --> Error recibiendo respuesta\n\r");
 		close(s); return 1;
 	}
 	string cuerpo = leerCuerpo(respuesta);
