@@ -35,7 +35,7 @@ int main (int argc, char *argv[]) {
 		case (5):{
 			if(argc == 1){ cout << "ID Edificio: "; cin>>idEdificio; cout << "ID Actividad: "; cin>>idActividad; }
 			else{ idEdificio = argv[2]; idActividad = argv[4]; }
-			missatge = pedirEdificioEspecifico(idEdificio);
+			missatge = pedirEstanciasEdificio(idEdificio);
 			//mensaje = const_cast<char*>(missatge.c_str());
 			mensaje = &missatge[0];
 			break; }
