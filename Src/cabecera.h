@@ -37,4 +37,4 @@ int menu();
 void ListaEdificios(string frase, bool final);
 void ListaEdificiosVacios(string frase, bool final);
 string leerCuerpo(char mensaje[]);
-
+void tratarMetodo5(string frase, string idActividad);
