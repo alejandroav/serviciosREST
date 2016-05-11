@@ -2,8 +2,6 @@
 
 int main (int argc, char *argv[]) {
 	
-	char *servidor_ip;
-	char *servidor_puerto;
 	char respuesta[1024];
     	const char* mensaje;
 	struct sockaddr_in direccion;
@@ -47,14 +45,6 @@ int main (int argc, char *argv[]) {
 			break; }
 	}
 
-	string ip = "193.145.231.149";
-	servidor_ip = const_cast<char*>(ip.c_str());
-	string puerto = "80";
-	servidor_puerto = const_cast<char*>(puerto.c_str());
-
-	
-	//printf("\n\rSYSMSG --> Enviando el siguiente mensaje a %s:%s:\n\r\"%s\"", servidor_ip, servidor_puerto, mensaje);
-
 	// Paso 1: Abrir el socket
 	s = socket(AF_INET, SOCK_STREAM, 0); // Creo el socket
 	if (s == -1){ fprintf(stderr, "\n\rSYSMSG --> Error. No se puede abrir el socket\n\r"); return 1; }
@@ -64,12 +54,21 @@ int main (int argc, char *argv[]) {
 	// Cargar la direccion
 	direccion.sin_family = AF_INET;
 
-	/*hostent *h = gethostbyname("sigua.ua.es");
+	// Obtener IP a partir de DN
+	std::ostringstream stream;
+	hostent *h = gethostbyname("sigua.ua.es");
 	unsigned char *addr = reinterpret_cast<unsigned char *>(h->h_addr_list[0]);
-	std::copy(addr, addr+4, infix_ostream_iterator<unsigned int>(std::cout, "."));*/
+	std::copy(addr, addr+4, infix_ostream_iterator<unsigned int>(stream, "."));
+	std::string str =  stream.str();
+	const char* chr = str.c_str();
+	// Obtener IP a partir de DN
 
-	direccion.sin_addr.s_addr = inet_addr(const_cast<char*>(servidor_ip));
-	direccion.sin_port = htons(atoi(servidor_puerto));
+	direccion.sin_addr.s_addr = inet_addr(chr);
+
+	string puerto = "80";
+	direccion.sin_port = htons(atoi(const_cast<char*>(puerto.c_str())));
+
+	cout<<"\n\rSYSMSG --> Escribiendo a " << chr << ":" << puerto <<endl;
 	if (connect(s, (struct sockaddr *)&direccion, sizeof (direccion)) == -1){
 		fprintf(stderr, "\n\rSYSMSG --> Error. No se puede conectar al servidor\n\r");
 		close(s); return 1;
