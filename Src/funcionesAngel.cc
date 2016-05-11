@@ -15,6 +15,72 @@ void angel(){
 
 }
 
+void tratarMetodo5(string frase, string idActividad){
+	char temp[frase.size()+1];
+	strcpy(temp, frase.c_str());
+	size_t total = strlen(temp);
+	string codigo = "";
+	string actividad = "";
+	string nombre = "";
+	bool cabecera = false;
+	for(size_t i = 0; i<total;i++){
+		if(temp[i]=='c'&&temp[i+1]=='o'&&temp[i+2]=='d'&&temp[i+3]=='i'&&temp[i+4]=='g'&&temp[i+5]=='o'){
+			codigo = "";
+			codigo += temp[i+9];
+			codigo += temp[i+10];
+			codigo += temp[i+11];
+			codigo += temp[i+12];
+			codigo += temp[i+13];
+			codigo += temp[i+14];
+			codigo += temp[i+15];
+			codigo += temp[i+16];
+			codigo += temp[i+17];
+		}
+		else if(temp[i]=='i'&&temp[i+1]=='d'&&temp[i+2]=='_'&&temp[i+3]=='a'&&temp[i+4]=='c'&&temp[i+5]=='t'&&temp[i+6]=='i'&&temp[i+7]=='v'&&temp[i+8]=='i'&&temp[i+9]=='d'&&temp[i+10]=='a'&&temp[i+11]=='d'){
+			actividad = "";
+			for(int k=i+14;temp[k]!=',';k++){
+				actividad += temp[k];
+				i=k;
+			}
+		}
+		else if(temp[i]=='c'&&temp[i+1]=='r'&&temp[i+2]=='u'&&temp[i+3]=='e'){
+			nombre = "";
+			for(int k=i+7;temp[k]!='"';k++){
+				nombre += temp[k];
+				i=k;
+			}
+		}
+		else if(temp[i]=='}'&&temp[i+1]==','&&temp[i+2]=='{'){
+			if(actividad.compare(idActividad)==0){
+				if(!cabecera){
+					//CABECERA
+					for(int i=0;i<13;i++){
+						cout<<"-";
+					}
+					cout<<endl;
+					cout<<"|    I D    |"<<endl;
+					cabecera = true;
+				}
+
+
+				for(int i=0;i<13;i++){
+					cout<<"-";
+				}
+				cout<<endl;
+				cout<<"| "<<codigo<<" | "<<endl;
+			}
+		}
+		
+	}
+	if(cabecera){
+		for(int i=0;i<13;i++){
+			cout<<"-";
+		}
+		cout<<endl;
+	}
+}
+
+
 void PintarCaja(int num){
 	switch(num){
 		case 1:{ 
