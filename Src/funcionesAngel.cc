@@ -15,25 +15,6 @@ void angel(){
 
 }
 
-string CorregirJSON(string frase){
-    //Creamos la variable donde guardaremos el json corregido
-    string correcion = "";
-    //Pasamos el json a char para poder tratarlo mejor en un bucle
-    char temp[frase.size()+1];
-    strcpy(temp, frase.c_str());
-    //Transformamos todas las comillas dobles en \"
-    for(size_t i=0;i<strlen(temp);i++){
-        //34 --> "
-        if(temp[i]==34){
-            correcion+="\"";
-        }
-        else{
-            correcion+=temp[i];
-        }
-    }
-    return correcion;
-}
-
 void PintarCaja(int num){
 	switch(num){
 		case 1:{ 
@@ -71,6 +52,17 @@ void PintarCaja(int num){
 			cout<<"|"<<endl;
 			break;}
 		case 4:{
+			//Linea de separacion
+			for(int i=0;i<65;i++){
+				cout<<"-";
+			}
+			cout<<endl;
+			cout<<"|  ID  | NOMBRE";
+			int espacios = 50 -1 -6;
+			for(int j=0;j<espacios;j++){
+				cout<<" ";		
+			}
+			cout<<"|  N  |"<<endl;
 			break;}
 		case 5:{
 			break;}
@@ -106,6 +98,25 @@ string ArreglarId(string frase){
 	return id;
 }
 
+string ArreglarNombre(string frase){
+	string nombre = "";
+	bool guardado = false;
+	char temp[frase.size()+1];
+	strcpy(temp, frase.c_str());
+	for(size_t i=0; i<strlen(temp);i++){
+		if(temp[i]>=65 && temp[i]<=90){
+			guardado = true;
+		}
+		if(guardado){
+			if(temp[i]!=92 && temp[i]!=34 && temp[i]!='}'){
+				nombre += temp[i];
+			}
+		}
+	}
+	return nombre;
+}
+
+//PETICION 1
 void ListaEdificios(string frase, bool final){
 	auto j = json::parse(frase);
 	string id = "";
@@ -140,6 +151,7 @@ void ListaEdificios(string frase, bool final){
 	}
 }
 
+//PETICION 3
 void ListaEdificiosVacios(string frase, bool final){
 	
 	auto j = json::parse(frase);
@@ -181,6 +193,7 @@ string itoa(int num){
 	return s.str();
 }
 
+//PETICION 2
 void EstanciasOcupantesEdificio(string frase, bool final){
 	auto j = json::parse(frase);
 	string id = "";
@@ -221,7 +234,7 @@ void EstanciasOcupantesEdificio(string frase, bool final){
 		cout<<endl;
 	}
 }
-
+//PETICION 4
 void EstanciaPorEdificio(string frase, string edificio){
     auto j = json::parse(frase);
     string id = "";
@@ -231,17 +244,15 @@ void EstanciaPorEdificio(string frase, string edificio){
         if(it.key().compare("id")==0){
             id = it.value();
         }
-        if(it.key().compare("nombre")==0){
-            nombre = itoa(it.value());
-        }
         if(it.key().compare("estancias")==0){
             estancias = itoa(it.value());
         }
     }
+    nombre = ArreglarNombre(id);
     id = ArreglarId(id);
     if(id.compare(edificio)==0){
         //Linea Superior
-        for(int i=0;i<50;i++){
+        for(int i=0;i<65;i++){
             cout<<"-";
         }
         cout<<endl;
@@ -252,7 +263,7 @@ void EstanciaPorEdificio(string frase, string edificio){
         }
         cout<<"| "<<estancias<<" |"<<endl;
         //Linea Inferior
-        for(int i=0;i<50;i++){
+        for(int i=0;i<65;i++){
             cout<<"-";
         }
         cout<<endl;
