@@ -32,3 +32,5 @@ int manageArguments(int argc, char *argv[]){
 	if (toRet == -1) cout<<err; return(toRet);
 	
 }
+
+//idEdificio = argv[2]; idActividad = argv[4];
