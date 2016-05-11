@@ -8,39 +8,39 @@ int main (int argc, char *argv[]) {
 	int s;
 	int n, enviados, recibidos;
 	string idEdificio, idActividad = idEdificio = "";
-	
+	string missatge;
 	// Comprobar los argumentos y tomarlos
 	int opcion = manageArguments(argc, argv);
 	if (opcion == -1) return(1);
 	
 	switch(opcion){
 		case (1):{ 
-			string missatge = pedirEdificios();
+			missatge = pedirEdificios();
 			mensaje = const_cast<char*>(missatge.c_str());
 			break; }
 		case (2):{ 
-			string missatge = pedirEstanciasOcupantesEdificio();
+			missatge = pedirEstanciasOcupantesEdificio();
 			mensaje = const_cast<char*>(missatge.c_str());
 			break; }
 		case (3):{
-			string missatge = pedirEdificiosSinOcupantes();
+			missatge = pedirEdificiosSinOcupantes();
 			mensaje = const_cast<char*>(missatge.c_str());
 			break; }
 		case (4):{
 			if(argc == 1){ cout << "ID Edificio: "; cin>>idEdificio; }
 			else idEdificio = argv[2];
-			string missatge = pedirEstanciasOcupantesEdificio();
+			missatge = pedirEstanciasOcupantesEdificio();
 			mensaje = const_cast<char*>(missatge.c_str());
 			break; }
 		case (5):{
 			if(argc == 1){ cout << "ID Edificio: "; cin>>idEdificio; cout << "ID Actividad: "; cin>>idActividad; }
 			else{ idEdificio = argv[2]; idActividad = argv[4]; }
-			string missatge = "hola";
+			missatge = pedirEdificioEspecifico(idEdificio);
 			//mensaje = const_cast<char*>(missatge.c_str());
 			mensaje = &missatge[0];
 			break; }
 		default:{
-			string missatge = "hola";
+			missatge = "hola";
 			mensaje = const_cast<char*>(missatge.c_str());
 			break; }
 	}
@@ -83,7 +83,7 @@ int main (int argc, char *argv[]) {
 		close(s); return 1;
 	}
 	printf("SYSMSG --> Mensaje enviado\n\r\n\r");
-
+	cout<<mensaje<<endl;
 	// Paso 4: Recibir respuesta
 	n = sizeof(respuesta) - 1;
 	recibidos = read(s, respuesta, n);
@@ -92,6 +92,7 @@ int main (int argc, char *argv[]) {
 		close(s); return 1;
 	}
 	string cuerpo = leerCuerpo(respuesta);
+cout<<cuerpo<<endl;
 	//cout<<respuesta<<endl;
 	while(respuesta[recibidos-1]!='\n'){
 		n = sizeof(respuesta) - 1;
@@ -102,10 +103,9 @@ int main (int argc, char *argv[]) {
 		}
 		respuesta[recibidos] = '\0';
 		cuerpo += respuesta;
-		//cout<<respuesta<<endl;
+		cout<<respuesta<<endl;
 	}
-
-	cuerpo = CorregirJSON(cuerpo);
+cout<<cuerpo<<endl;
 	SepararJSON(cuerpo, opcion, idEdificio);
 
 
