@@ -235,7 +235,10 @@ void EstanciasOcupantesEdificio(string frase, bool final){
 	}
 }
 //PETICION 4
-void EstanciaPorEdificio(string frase, string edificio){
+bool EstanciaPorEdificio(string frase, string edificio){
+
+	bool toRET = false;
+
     auto j = json::parse(frase);
     string id = "";
     string nombre = "";
@@ -251,6 +254,9 @@ void EstanciaPorEdificio(string frase, string edificio){
     nombre = ArreglarNombre(id);
     id = ArreglarId(id);
     if(id.compare(edificio)==0){
+
+	toRET = true;
+	PintarCaja(4);
         //Linea Superior
         for(int i=0;i<65;i++){
             cout<<"-";
@@ -268,25 +274,37 @@ void EstanciaPorEdificio(string frase, string edificio){
         }
         cout<<endl;
     }
+	return(toRET);
 }
 
-void SeleccionMetodo(string frase, int num, bool final, string edificio){
+bool SeleccionMetodo(string frase, int num, bool final, string edificio){
+
+	bool toRET = false;
+
 	switch(num){
 		case 1: ListaEdificios(frase, final);
+			toRET = true;
 			break;
 		case 2: EstanciasOcupantesEdificio(frase, final);
+			toRET = true;
 			break;
 		case 3:	ListaEdificiosVacios(frase, final);
+			toRET = true;
 			break;
-        case 4:	EstanciaPorEdificio(frase, edificio);
+		case 4:	toRET = EstanciaPorEdificio(frase, edificio);
 			break;
 		case 5: //Tratar quinto json
+			toRET = true;
 			break;
 	}
+
+	return(toRET);
+
 }
 
 void SepararJSON(string frase, int num, string edificio){
-	PintarCaja(num);
+	bool edificioEncontrado = false;
+	if(num != 4)PintarCaja(num);
     //Creamos una variable donde guardaremos cada JSON por separado
     string json = "";
     bool leer = false;
@@ -295,19 +313,19 @@ void SepararJSON(string frase, int num, string edificio){
     strcpy(temp, frase.c_str());
     
     //Recorremos el char
-    for(size_t i=0; i<strlen(temp);i++){
+    for(size_t i=0; i<strlen(temp) && !edificioEncontrado;i++){
         //No leemos los corchetes del principio y el final
         if(temp[i]=='[' || temp[i]==']'){leer = true;}
         //En el caso de final del objeto pasamos el json al método y lo reseteamos para la lectura del siguiente
         else if(temp[i]=='}' && temp[i+1]==',' && temp[i+2]=='{' && leer){
             json += temp[i];
-            SeleccionMetodo(json, num, false, edificio);
+            edificioEncontrado = SeleccionMetodo(json, num, false, edificio);
             json = "";
             i++;
         }
 	else if(temp[i]=='}' && temp[i+1]==']' && leer){ 
 		json += temp[i];
-		SeleccionMetodo(json, num, true, edificio);
+		edificioEncontrado = SeleccionMetodo(json, num, true, edificio);
 	}
         //Guardamos el caracter en el json
         else{
@@ -316,6 +334,7 @@ void SepararJSON(string frase, int num, string edificio){
 		}
         }
     }
+    if(!edificioEncontrado) cout<<"SYSMSG --> Edificio no encontrado, por favor asegurese de que el eficicio es correcto."<<endl;
 }
 
 string leerCuerpo(char mensaje[]){

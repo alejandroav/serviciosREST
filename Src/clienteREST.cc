@@ -82,8 +82,8 @@ int main (int argc, char *argv[]) {
 		fprintf(stderr, "SYSMSG --> Error enviando el mensaje\n\r");
 		close(s); return 1;
 	}
-	printf("SYSMSG --> Mensaje enviado\n\r\n\r");
-	cout<<mensaje<<endl;
+	printf("SYSMSG --> Mensaje enviado\n\r");
+//cout<<mensaje<<endl;
 	// Paso 4: Recibir respuesta
 	n = sizeof(respuesta) - 1;
 	recibidos = read(s, respuesta, n);
@@ -92,20 +92,20 @@ int main (int argc, char *argv[]) {
 		close(s); return 1;
 	}
 	string cuerpo = leerCuerpo(respuesta);
-cout<<cuerpo<<endl;
-	//cout<<respuesta<<endl;
+//cout<<cuerpo<<endl;
+//cout<<respuesta<<endl;
 	while(respuesta[recibidos-1]!='\n'){
 		n = sizeof(respuesta) - 1;
 		recibidos = read(s, respuesta, n);
 		if (recibidos == 1){
-			fprintf(stderr, "\n\rSYSMSG --> Error recibiendo respuesta\n\r");
+			fprintf(stderr, "SYSMSG --> Error recibiendo respuesta\n\r");
 			close(s); return 1;
 		}
 		respuesta[recibidos] = '\0';
 		cuerpo += respuesta;
-		cout<<respuesta<<endl;
+//cout<<respuesta<<endl;
 	}
-cout<<cuerpo<<endl;
+//cout<<cuerpo<<endl;
 	SepararJSON(cuerpo, opcion, idEdificio);
 
 
@@ -115,7 +115,7 @@ cout<<cuerpo<<endl;
     
 	// Paso 5: Cerrar el socket
 	close(s);
-	printf("\n\rSYSMSG --> Socket cerrado. Comunicacion finalizada\n\r");
+	printf("SYSMSG --> Socket cerrado. Comunicacion finalizada\n\r");
 
 	return 0;
 }
