@@ -83,7 +83,7 @@ int main (int argc, char *argv[]) {
 		close(s); return 1;
 	}
 	printf("SYSMSG --> Mensaje enviado\n\r");
-//cout<<mensaje<<endl;
+	//cout<<mensaje<<endl;
 	// Paso 4: Recibir respuesta
 	n = sizeof(respuesta) - 1;
 	recibidos = read(s, respuesta, n);
@@ -92,8 +92,17 @@ int main (int argc, char *argv[]) {
 		close(s); return 1;
 	}
 	string cuerpo = leerCuerpo(respuesta);
-//cout<<cuerpo<<endl;
-//cout<<respuesta<<endl;
+	//cout<<cuerpo<<endl;
+	//cout<<respuesta<<endl;
+
+	
+	//DETECTAR 404 con RESPUESTA
+	if(detectar404(respuesta)){
+		cout<<"SYSMSG --> Edificio no encontrado, por favor asegurese de que el eficicio es correcto."<<endl;
+		return(1);
+	}
+
+
 	while(respuesta[recibidos-1]!='\n'){
 		n = sizeof(respuesta) - 1;
 		recibidos = read(s, respuesta, n);
@@ -103,9 +112,9 @@ int main (int argc, char *argv[]) {
 		}
 		respuesta[recibidos] = '\0';
 		cuerpo += respuesta;
-//cout<<respuesta<<endl;
+	//cout<<respuesta<<endl;
 	}
-//cout<<cuerpo<<endl;
+	//cout<<cuerpo<<endl;
 	if(opcion<=4){
 		SepararJSON(cuerpo, opcion, idEdificio);
 	}

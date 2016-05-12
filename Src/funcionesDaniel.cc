@@ -32,3 +32,9 @@ int manageArguments(int argc, char *argv[]){
 	if (toRet == -1) cout<<err; return(toRet);
 	
 }
+
+bool detectar404(string msg){
+	bool toRET = false;
+	if((int)msg.at(9) != '2') toRET = true;
+	return (toRET);
+}

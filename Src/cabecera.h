@@ -11,14 +11,12 @@
 #include <signal.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-
 #include "infix_iterator.h"
 #include <iostream>
 #include <iterator>
 #include <exception>
 #include <algorithm>
 #include <iomanip>
-
 #include "json.hpp"
 using namespace std;
 
@@ -38,3 +36,4 @@ void ListaEdificios(string frase, bool final);
 void ListaEdificiosVacios(string frase, bool final);
 string leerCuerpo(char mensaje[]);
 void tratarMetodo5(string frase, string idActividad);
+bool detectar404(string msg);
