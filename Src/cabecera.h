@@ -30,7 +30,6 @@ string peticion();
 string CorregirJSON(string frase);
 void SepararJSON(string frase, int num, string edificio);
 bool SeleccionMetodo(string frase, int num, bool final, string edificio);
-void angel();
 int menu();
 void ListaEdificios(string frase, bool final);
 void ListaEdificiosVacios(string frase, bool final);
