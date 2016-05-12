@@ -2,19 +2,6 @@
 #include <string.h>
 using namespace nlohmann;
 
-void angel(){
-
-    auto j = json::parse("{\"id\":\"{0000,CAMPUS (ZONAS COMUNES)}\",\"superficie\":\"647577.39067068\",\"estancias\":372,\"ocupantes\":0}");
-    
-    cout<<"hola"<<endl;
-	cout<<j.size()<<endl;
-    
-    for(json::iterator it = j.begin(); it != j.end(); ++it){
-        cout << it.key() << " : " << it.value() << endl;
-    }
-
-}
-
 void tratarMetodo5(string frase, string idActividad){
 	char temp[frase.size()+1];
 	strcpy(temp, frase.c_str());
