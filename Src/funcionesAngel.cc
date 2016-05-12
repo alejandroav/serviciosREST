@@ -352,18 +352,14 @@ bool SeleccionMetodo(string frase, int num, bool final, string edificio){
 
 	switch(num){
 		case 1: ListaEdificios(frase, final);
-			toRET = true;
 			break;
 		case 2: EstanciasOcupantesEdificio(frase, final);
-			toRET = true;
 			break;
 		case 3:	ListaEdificiosVacios(frase, final);
-			toRET = true;
 			break;
 		case 4:	toRET = EstanciaPorEdificio(frase, edificio);
 			break;
 		case 5: //Tratar quinto json
-			toRET = true;
 			break;
 	}
 
@@ -403,7 +399,7 @@ void SepararJSON(string frase, int num, string edificio){
 		}
         }
     }
-    if(!edificioEncontrado) cout<<"SYSMSG --> Edificio no encontrado, por favor asegurese de que el eficicio es correcto."<<endl;
+    if(!edificioEncontrado && num == 4) cout<<"SYSMSG --> Edificio no encontrado, por favor asegurese de que el eficicio es correcto."<<endl;
 }
 
 string leerCuerpo(char mensaje[]){
